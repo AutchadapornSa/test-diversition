@@ -1,0 +1,48 @@
+# Architecture และเทคโนโลยีสำหรับ Production
+
+## Frontend:
+- Framework: Vue 3 (Composition API)
+- Styling: Tailwind CSS
+- Build Tool: Vite
+- Deployment Output: Static files (HTML, CSS, JS)
+
+## Backend (Optional สำหรับ Static):
+- ไม่มี หากใช้ Mock Data (Static Hosting)
+- หากมี API: Node.js + Express (หรือ Fastify) พร้อม CDN
+
+## Hosting:
+- Static Hosting: 
+  - Netlify, Vercel หรือ GitHub Pages สำหรับ Static SPA
+  - หรือ Cloudflare Pages สำหรับ Performance สูง
+
+## Server Specifications (กรณีใช้ VPS):
+- VPS Provider: DigitalOcean / AWS Lightsail / Hetzner
+- Minimum Spec:
+  - CPU: 2 vCPU
+  - RAM: 2-4 GB
+  - SSD: 50 GB
+  - OS: Ubuntu 22.04 LTS
+- Software:
+  - Nginx (Reverse Proxy)
+  - Docker (หากต้องการ Containerize)
+  - PM2 (กรณีมี backend)
+
+## CDN:
+- Cloudflare CDN เพื่อ Cache ไฟล์ Static และเพิ่มความเร็วทั่วโลก
+
+## SSL:
+- ใช้ Let's Encrypt ร่วมกับ Nginx หรือ Proxy ผ่าน Cloudflare SSL
+
+## Deploy Process:
+1. Build Project: `npm run build`
+2. Upload dist/ ขึ้น Hosting
+   - สำหรับ Static: deploy ผ่าน Netlify/Vercel
+   - สำหรับ VPS: 
+      - ใช้ Nginx serve static จาก `/var/www/project`
+      - Reload nginx config
+3. แนะนำให้เชื่อม GitHub Repository เพื่อ Auto Deploy
+
+## Monitoring:
+- Uptime Monitoring: UptimeRobot / StatusCake
+- Performance Monitoring: Cloudflare Analytics หรือ Google PageSpeed Insights
+- Logging (หากมี Backend): PM2 Logs / Docker Logs / Loki + Grafana (ถ้าซับซ้อน)
